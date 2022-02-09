@@ -1,0 +1,7 @@
+.film-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    max-width: 1010px;
+    padding-top: 20px;
+}
