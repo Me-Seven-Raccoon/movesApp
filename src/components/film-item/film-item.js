@@ -5,7 +5,6 @@ import './film-item.css'
 export default class FilmItem extends Component {
   render() {
     const { release_date, title, overview, poster_path } = this.props
-
     return (
       <div className="blockFilms">
         <div className="block-image">
@@ -15,7 +14,6 @@ export default class FilmItem extends Component {
           <div className="blockInfo-title">
             <h5>{title}</h5>
           </div>
-          {/*<div className="blockInfo-data">{release_date}</div>*/}
           <div className="blockInfo-data">{format(new Date(release_date), 'MMMM dd, yyyy')}</div>
           <p className="blockInfo-overview">{overview}</p>
         </div>
