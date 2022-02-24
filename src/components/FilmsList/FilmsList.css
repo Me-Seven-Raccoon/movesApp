@@ -1,0 +1,24 @@
+
+.film-list-container{
+    background-color: #fff;
+}
+
+.film-list-container .ant-tabs-nav:before{
+    width:117px;
+    left:50%;
+    right:auto;
+    margin-left: -73px;
+}
+
+.ant-tabs-nav-wrap{
+    justify-content: center;
+}
+
+.films-list{
+    display: flex;
+    padding:16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+}
