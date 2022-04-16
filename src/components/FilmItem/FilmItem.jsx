@@ -3,8 +3,8 @@ import { format } from 'date-fns'
 import './FilmItem.css'
 import { Rate } from 'antd'
 
-import { Consumer } from '../context'
-import ApiFilmsService from '../../Services/films-services'
+import { Consumer } from '../../context'
+import ApiFilmsService from '../../services/films-services'
 
 export default class FilmItem extends Component {
   films = new ApiFilmsService()

@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Tabs } from 'antd'
-import { Row } from 'antd'
+import { Tabs, Row } from 'antd'
 
-import { Provider } from '../context'
-import ApiFilmsService from '../../Services/films-services'
+import { Provider } from '../../context'
+import ApiFilmsService from '../../services/films-services'
 import FilmItem from '../FilmItem'
 import Spiner from '../Spiner'
 import ErrorIndicator from '../ErrorIndicator'
@@ -30,6 +29,7 @@ export default class FilmsList extends Component {
     page: 1,
     totalPages: null,
     rating: {},
+    firstLoad: true,
   }
 
   componentDidMount = () => {
@@ -39,7 +39,6 @@ export default class FilmsList extends Component {
       })
     })
     this.films.getSessionId().then(() => {})
-    this.updateFilms()
   }
 
   componentDidUpdate(prevState, prevProps) {
@@ -64,6 +63,7 @@ export default class FilmsList extends Component {
             totalPages: films.total_pages,
             loading: false,
             errorSearch: false,
+            firstLoad: false,
           })
         }
       })
@@ -71,13 +71,12 @@ export default class FilmsList extends Component {
   }
 
   searchFilms = (text) => {
-    if (text === '') {
-      text = 'return'
+    if (text !== '') {
+      this.setState({
+        valueSearch: text,
+      })
+      this.searchPage(1)
     }
-    this.setState({
-      valueSearch: text,
-    })
-    this.searchPage(1)
   }
 
   onError = (err) => {
@@ -111,13 +110,25 @@ export default class FilmsList extends Component {
 
   render() {
     const { TabPane } = Tabs
-    const { dataFilms, loading, error, errorSearch, page, totalPages, valueSearch, genresList, filmsRated, rating } =
-      this.state
+    const {
+      dataFilms,
+      loading,
+      error,
+      errorSearch,
+      page,
+      totalPages,
+      valueSearch,
+      genresList,
+      filmsRated,
+      rating,
+      firstLoad,
+    } = this.state
     const loadData = !(loading || error || errorSearch)
     const errSearch = errorSearch ? <p>Фильмы не найдены</p> : null
     const errRate = <p>Фильмы не оценены</p>
     const errorMessage = error ? <ErrorIndicator /> : null
-    const spinner = loading ? <Spiner /> : null
+    const spinner = loading && !firstLoad ? <Spiner /> : null
+    const message = firstLoad ? <p>Начните поиск фильмов</p> : null
     const content = loadData ? (
       <FilmsView
         dataFilms={dataFilms.map((film) => {
@@ -144,6 +155,7 @@ export default class FilmsList extends Component {
               {errorMessage}
               {spinner}
               {content}
+              {message}
               {pageLink}
             </Row>
           </TabPane>
